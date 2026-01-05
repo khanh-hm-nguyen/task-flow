@@ -6,14 +6,14 @@ TaskFlow is a robust task management dashboard built with a modern **Next.js** f
 ## 🚀 Tech Stack
 
 ### Frontend
-* **Framework:** Next.js 14+ (App Router)
+* **Framework:** Next.js 16 (App Router)
 * **Language:** TypeScript
 * **Styling:** Tailwind CSS
 * **HTTP Client:** Fetch API (Custom Service)
 
 ### Backend
 * **Framework:** Spring Boot 3
-* **Language:** Java 17+
+* **Language:** Java 21+
 * **Database:** PostgreSQL
 * **ORM:** Spring Data JPA / Hibernate
 * **Build Tool:** Maven
@@ -75,33 +75,27 @@ The backend will start at http://localhost:8080
 ```text
 cd frontend
 Install dependencies:
-
 ```
 
 2. Install dependencies:
 
 ```text
 npm install
-
 ```
 
 2. Setup environment variables. Create a file named .env.local in the frontend root:
 
 
 ```text
-
 # frontend/.env.local
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
-
 ```
 
 3. Run the development server:
 
 
 ```text
-
 npm run dev
-
 ```
 The application will be available at http://localhost:3000
 
@@ -110,7 +104,6 @@ The application will be available at http://localhost:3000
 The backend exposes the following REST endpoints:
 
 ```text
-
 Method      Endpoint                                   Description
 GET         /task-lists                                Get all task lists
 POST        /task-lists                                Create a new task list
@@ -119,6 +112,5 @@ GET         /task-lists/{id}/tasks                     Get all tasks for a list
 POST        /task-lists/{id}/tasks                     Create a new task
 PUT         /task-lists/{listId}/tasks/{taskId}        Update a task (Status, Title, etc.)
 DELETE      /task-lists/{listId}/tasks/{taskId}        Delete a task
-
 ```
 
