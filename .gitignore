@@ -1,0 +1,17 @@
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.DS_Store
+
+# Java / Spring Boot
+backend/target/
+backend/mvnw
+backend/mvnw.cmd
+backend/.mvn
+
+# Node / Next.js 
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env.local

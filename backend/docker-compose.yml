@@ -1,0 +1,25 @@
+services:
+  db:
+    container_name: task
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db:/data/postgres
+    ports:
+      # Optional: make exposed port "5332:5432
+      - "5332:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+# If you have more than one container and want them to communicate through
+# same network
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
