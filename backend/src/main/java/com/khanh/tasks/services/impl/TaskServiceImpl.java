@@ -27,11 +27,28 @@ public class TaskServiceImpl implements TaskService {
         this.taskListRepository = taskListRepository;
     }
 
+    /**
+     * Retreive all tasks by tasklist id
+     *
+     * @param taskListId
+     * @return
+     */
     @Override
     public List<Task> listTasks(UUID taskListId) {
         return taskRepository.findByTaskListId(taskListId);
     }
 
+    /**
+     * createTask:
+     * Validates that the task title is not empty.
+     * Checks if the parent TaskList exists.
+     * Sets default values (OPEN status, MEDIUM priority).
+     * Sets timestamps (created, updated).
+     *
+     * @param taskListId
+     * @param task
+     * @return
+     */
     @Transactional
     @Override
     public Task creatTask(UUID taskListId, Task task) {
@@ -68,11 +85,30 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+
+    /**
+     * Retrieve task by task id and tasklist id
+     *
+     * @param taskListId
+     * @param taskId
+     * @return
+     */
     @Override
     public Optional<Task> getTask(UUID taskListId, UUID taskId) {
         return taskRepository.findByTaskListIdAndId(taskListId, taskId);
     }
 
+    /**
+     * updateTask:
+     * Fetches the existing task.
+     * Updates specific fields (Title, Description, Priority, Status, Due Date).
+     * Updates the updated timestamp.
+     *
+     * @param taskListId
+     * @param taskId
+     * @param task
+     * @return
+     */
     @Transactional
     @Override
     public Task updateTask(UUID taskListId, UUID taskId, Task task) {
@@ -103,6 +139,13 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.save(existingTask);
     }
 
+
+    /**
+     * Delete specific task by task id and tasklist id
+     *
+     * @param taskListId
+     * @param taskId
+     */
     @Transactional
     @Override
     public void deleteTask(UUID taskListId, UUID taskId) {

@@ -21,11 +21,22 @@ public class TaskListServiceImpl implements TaskListService {
         this.taskListRepository = taskListRepository;
     }
 
+    /**
+     * Retrieve all task lists
+     * @return
+     */
     @Override
     public List<TaskList> listTaskLists() {
         return taskListRepository.findAll();
     }
 
+
+    /**
+     * Create new task list
+     *
+     * @param taskList
+     * @return
+     */
     @Override
     public TaskList createTaskList(TaskList taskList) {
 
@@ -50,12 +61,24 @@ public class TaskListServiceImpl implements TaskListService {
 
     }
 
+    /**
+     * Retrieve tasklist by id
+     * @param id
+     * @return
+     */
     @Override
     public Optional<TaskList> getTaskList(UUID id) {
         return taskListRepository.findById(id);
 
     }
 
+    /**
+     * Update tasklist by task list id
+     *
+     * @param taskListId
+     * @param taskList
+     * @return
+     */
     @Transactional
     @Override
     public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
@@ -78,6 +101,10 @@ public class TaskListServiceImpl implements TaskListService {
         return taskListRepository.save(existingTaskList);
     }
 
+    /**
+     * remove task list by uuid
+     * @param taskListId
+     */
     @Override
     public void deleteTaskList(UUID taskListId) {
         taskListRepository.deleteById(taskListId);

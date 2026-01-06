@@ -6,6 +6,18 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Table: task
+ *
+ * Key Fields:
+ * id (UUID): Unique primary key.
+ * title (String): The main description of the task.
+ * status ({@link TaskStatus}): OPEN or CLOSED.
+ * priority ({@link TaskPriority}): HIGH, MEDIUM, or LOW.
+ *
+ * Relationships:
+ * Many-to-One relationship with {@link TaskList}
+ */
 @Entity
 @Table(name = "task")
 public class Task {

@@ -5,9 +5,17 @@ import com.khanh.tasks.domain.entities.Task;
 import com.khanh.tasks.mappers.TaskMapper;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Responsible for converting between Task entity and DTO
+ */
 @Component
 public class TaskMapperImpl implements TaskMapper {
+
+    /**
+     * fromDto(TaskDto): Converts a DTO into a Task entity (used when creating/updating).
+     * @param taskDto
+     * @return
+     */
     @Override
     public Task fromDto(TaskDto taskDto) {
         return new Task(
@@ -23,9 +31,13 @@ public class TaskMapperImpl implements TaskMapper {
         );
     }
 
+    /**
+     * toDto(Task): Converts a Task entity into a DTO (used when sending data to frontend).
+     * @param task
+     * @return
+     */
     @Override
     public TaskDto toDto(Task task) {
-        // FIX: Provide the actual implementation
         return new TaskDto(
                 task.getId(),
                 task.getTitle(),

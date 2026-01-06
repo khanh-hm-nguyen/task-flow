@@ -48,13 +48,11 @@ public class TaskListController {
             @PathVariable("task_list_id") UUID taskListId,
             @RequestBody TaskListDto taskListDto
     ) {
-        // 1. Convert DTO to Entity
+       
         TaskList mappedTaskList = taskListMapper.fromDto(taskListDto);
 
-        // 2. FIX: Manually set the ID from the URL onto the entity
         mappedTaskList.setId(taskListId);
 
-        // 3. Now pass it to the service (it won't be null anymore!)
         TaskList updatedTaskList = taskListService.updateTaskList(
                 taskListId,
                 mappedTaskList

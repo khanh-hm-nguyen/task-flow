@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 
+/**
+ * Responsible for converting between TaskList entity and DTO
+ */
 @Component
 public class TaskListMapperImpl implements TaskListMapper {
 

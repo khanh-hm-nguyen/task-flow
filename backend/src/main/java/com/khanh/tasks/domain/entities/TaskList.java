@@ -5,9 +5,17 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
+/**
+ *Table: task_lists
+ *
+ * Key Fields:
+ * id (UUID): Unique primary key.
+ * tasks ({@link Task}) (OneToMany): A list of Task objects associated with this list.
+ * Cascade Behavior: CascadeType.REMOVE is set, meaning if you delete a TaskList,
+ * all its Tasks are automatically deleted from the database.
+ */
 @Entity
 @Table(name = "task_lists")
 public class TaskList {
