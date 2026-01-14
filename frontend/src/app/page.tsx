@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import TaskView from "@/components/TaskView";
 import { IconMenu } from "@/components/Icons";
-import { TaskDto, TaskStatus, TaskListDto, Priority } from "@/types";
-import { api } from "@/services/api";
+import { TaskDto, TaskStatus, TaskListDto, Priority } from "@/types/task";
+import { taskService } from "@/services/task.service";
 
 export default function Dashboard() {
   const [lists, setLists] = useState<TaskListDto[]>([]);
@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   const fetchLists = async () => {
     try {
-      const data = await api.getLists();
+      const data = await taskService.getLists();
       setLists(data);
       if (data.length > 0 && !activeListId) {
         setActiveListId(data[0].id);
@@ -42,7 +42,7 @@ export default function Dashboard() {
 
   const fetchTasks = async (listId: string) => {
     try {
-      const data = await api.getTasks(listId);
+      const data = await taskService.getTasks(listId);
       setTasks(data);
     } catch (err) {
       console.error(err);
@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   const handleAddList = async (title: string) => {
     try {
-      const newList = await api.createList(title);
+      const newList = await taskService.createList(title);
       setLists([...lists, newList]);
       setActiveListId(newList.id);
     } catch (err) {
@@ -63,7 +63,7 @@ export default function Dashboard() {
     if (!confirm("Are you sure? This will delete all tasks in the list."))
       return;
     try {
-      await api.deleteList(id);
+      await taskService.deleteList(id);
       const updatedLists = lists.filter((l) => l.id !== id);
       setLists(updatedLists);
       if (activeListId === id) {
@@ -88,7 +88,7 @@ export default function Dashboard() {
         status: "OPEN",
       };
 
-      const created = await api.createTask(activeListId, newTask);
+      const created = await taskService.createTask(activeListId, newTask);
       setTasks([...tasks, created]);
       refreshListCounts();
     } catch (err) {
@@ -110,7 +110,7 @@ export default function Dashboard() {
 
       setTasks(tasks.map((t) => (t.id === taskId ? updatedTask : t)));
 
-      await api.updateTask(activeListId, taskId, updatedTask);
+      await taskService.updateTask(activeListId, taskId, updatedTask);
     } catch (err) {
       fetchTasks(activeListId);
     }
@@ -119,7 +119,7 @@ export default function Dashboard() {
   const handleDeleteTask = async (taskId: string) => {
     if (!activeListId) return;
     try {
-      await api.deleteTask(activeListId, taskId);
+      await taskService.deleteTask(activeListId, taskId);
       setTasks(tasks.filter((t) => t.id !== taskId));
     } catch (err) {
       alert("Failed to delete task");

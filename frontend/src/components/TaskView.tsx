@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TaskDto, Priority } from '@/types'; 
+import { TaskDto, Priority } from '@/types/task'; 
 import { IconPlus, IconTrash, IconCheckCircle, IconCircle, IconCalendar } from './Icons';
 
 interface TaskViewProps {

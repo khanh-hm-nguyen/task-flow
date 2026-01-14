@@ -1,4 +1,4 @@
-// src/types.ts
+
 
 export type Priority = 'HIGH' | 'MEDIUM' | 'LOW';
 export type TaskStatus = 'OPEN' | 'CLOSED';

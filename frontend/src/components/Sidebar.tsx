@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { TaskListDto } from "@/types";
-// Importing Material UI Icons
+import { TaskListDto } from "@/types/task";
+
 import { 
   ListAlt, 
   DeleteOutline, 
