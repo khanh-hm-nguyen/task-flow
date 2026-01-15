@@ -38,20 +38,32 @@ public class TaskList {
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
 
-
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public TaskList() {
     }
 
-    public TaskList(UUID id, String title, String description, List<Task> tasks, LocalDateTime created, LocalDateTime updated) {
+    public TaskList(UUID id, String title, String description, List<Task> tasks, LocalDateTime created, LocalDateTime updated, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.tasks = tasks;
         this.created = created;
         this.updated = updated;
+        this.user = user; // Set the user here
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 

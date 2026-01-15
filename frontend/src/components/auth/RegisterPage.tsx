@@ -37,7 +37,7 @@ const RegisterPage = () => {
       // The service handles token storage automatically
       const res = await authService.register(formData);
       console.log(res);
-      router.push("/dashbboard");
+      router.push("/login");
     } catch (err) {
       setError("Registration failed. Email might be in use.");
     } finally {
@@ -57,6 +57,12 @@ const RegisterPage = () => {
           <h2 className="text-2xl font-bold">Create Account</h2>
         </div>
 
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 text-sm rounded">
+            {error}
+          </div>
+        )}
+
         {/* Form */}
         <div className="p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -66,6 +72,7 @@ const RegisterPage = () => {
                 <PersonOutline fontSize="small" />
               </div>
               <input
+                name="firstname"
                 type="text"
                 placeholder="First Name"
                 required
@@ -80,6 +87,7 @@ const RegisterPage = () => {
                 <PersonOutline fontSize="small" />
               </div>
               <input
+                name="lastname"
                 type="text"
                 placeholder="Last Name"
                 required
@@ -94,6 +102,7 @@ const RegisterPage = () => {
                 <EmailOutlined fontSize="small" />
               </div>
               <input
+                name="email"
                 type="email"
                 placeholder="Email Address"
                 required
@@ -108,6 +117,7 @@ const RegisterPage = () => {
                 <LockOutlined fontSize="small" />
               </div>
               <input
+                name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 required
@@ -129,9 +139,14 @@ const RegisterPage = () => {
 
             <button
               type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors"
+              disabled={loading}
+              className={`w-full font-medium py-3 rounded-lg transition-colors ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-700 text-white"
+              }`}
             >
-              Get Started
+              {loading ? "Creating Account..." : "Get Started"}
             </button>
           </form>
 

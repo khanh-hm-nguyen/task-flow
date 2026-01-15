@@ -37,6 +37,7 @@ public class TaskListMapperImpl implements TaskListMapper {
                                 .toList()
                         ).orElse(null),
                 null,
+                null,
                 null
         );
     }
@@ -53,10 +54,10 @@ public class TaskListMapperImpl implements TaskListMapper {
                 calculateTaskListProgress(taskList.getTasks()),
                 Optional.ofNullable(taskList.getTasks())
                         .map(tasks ->
-                                        tasks.stream().map(taskMapper::toDto).toList()
-                                ).orElse((null))
+                                tasks.stream().map(taskMapper::toDto).toList()
+                        ).orElse((null))
 
-                );
+        );
     }
 
     private Double calculateTaskListProgress(List<Task> tasks) {

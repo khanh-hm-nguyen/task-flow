@@ -1,6 +1,7 @@
 package com.khanh.tasks.services.impl;
 
 import com.khanh.tasks.domain.entities.TaskList;
+import com.khanh.tasks.domain.entities.User;
 import com.khanh.tasks.repositories.TaskListRepository;
 import com.khanh.tasks.services.TaskListService;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,8 @@ public class TaskListServiceImpl implements TaskListService {
      * @return
      */
     @Override
-    public List<TaskList> listTaskLists() {
-        return taskListRepository.findAll();
+    public List<TaskList> listTaskLists(User user) {
+        return taskListRepository.findByUserId(user.getId());
     }
 
 
@@ -38,7 +39,7 @@ public class TaskListServiceImpl implements TaskListService {
      * @return
      */
     @Override
-    public TaskList createTaskList(TaskList taskList) {
+    public TaskList createTaskList(TaskList taskList , User user) {
 
         if (null != taskList.getId()) {
             throw new IllegalArgumentException("Task list already has an ID!");
@@ -56,7 +57,8 @@ public class TaskListServiceImpl implements TaskListService {
                 taskList.getDescription(),
                 null,
                 now,
-                now
+                now,
+                user
         ));
 
     }
@@ -81,7 +83,7 @@ public class TaskListServiceImpl implements TaskListService {
      */
     @Transactional
     @Override
-    public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
+    public TaskList updateTaskList(UUID taskListId, TaskList taskList, User currentUser) {
 
        // System.out.println(taskListId);
 
@@ -93,11 +95,21 @@ public class TaskListServiceImpl implements TaskListService {
             throw new IllegalArgumentException("Attempting to change task list ID, this is not permitted");
         }
 
-        TaskList existingTaskList = taskListRepository.findById(taskListId).orElseThrow(() ->
-                new IllegalArgumentException("Task list not found!"));
+        //  find the existing list
+        TaskList existingTaskList = taskListRepository.findById(taskListId)
+                .orElseThrow(() -> new IllegalArgumentException("Task list not found!"));
+
+        //  current user check
+        if (!existingTaskList.getUser().getId().equals(currentUser.getId())) {
+            throw new IllegalStateException("You do not have permission to update this task list");
+        }
+
+        //  apply changes
         existingTaskList.setTitle(taskList.getTitle());
         existingTaskList.setDescription(taskList.getDescription());
         existingTaskList.setUpdated(LocalDateTime.now());
+
+        //  save and return
         return taskListRepository.save(existingTaskList);
     }
 
@@ -106,7 +118,14 @@ public class TaskListServiceImpl implements TaskListService {
      * @param taskListId
      */
     @Override
-    public void deleteTaskList(UUID taskListId) {
+    public void deleteTaskList(UUID taskListId, User currentUser) {
+        TaskList existingTaskList = taskListRepository.findById(taskListId)
+                .orElseThrow(() -> new IllegalArgumentException("Task list not found!"));
+
+        if (!existingTaskList.getUser().getId().equals(currentUser.getId())) {
+            throw new IllegalStateException("You do not have permission to delete this task list");
+        }
+
         taskListRepository.deleteById(taskListId);
     }
 
