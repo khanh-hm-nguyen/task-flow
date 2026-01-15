@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { authService } from "@/services/auth.service";
+
 import Link from "next/link";
 import {
   EmailOutlined,
@@ -11,12 +14,26 @@ import {
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Logging in...", { email, password });
+    setLoading(true);
+    setError("");
+    try {
+      const res = await authService.login({ email, password });
+      //console.log(res)
+      router.push("/dashboard");
+    } catch (err) {
+      setError("Invalid credentials" + err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,7 +46,7 @@ const LoginPage = () => {
 
         {/* Form */}
         <div className="p-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-5">
             {/* Email */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">

@@ -38,7 +38,7 @@ public class AuthenticationService {
     }
 
 
-
+    // login
     public AuthResponse authenticate(AuthRequest request) {
 
         // call authenticationManager.authenticate() to check credentials

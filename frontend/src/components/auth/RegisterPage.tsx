@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { authService } from "@/services/auth.service";
+import { RegisterRequest } from "@/types/auth";
 import Link from "next/link";
+
+
 import {
   EmailOutlined,
   LockOutlined,
@@ -12,13 +17,36 @@ import {
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState<RegisterRequest>({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Registering...", { name, email, password });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+   e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      // The service handles token storage automatically
+      const res = await authService.register(formData);
+      console.log(res)
+      router.push("/dashbboard");
+    } catch (err) {
+      setError("Registration failed. Email might be in use.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -41,8 +69,7 @@ const RegisterPage = () => {
                 type="text"
                 placeholder="Full Name"
                 required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleChange}
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm"
               />
             </div>
@@ -56,8 +83,7 @@ const RegisterPage = () => {
                 type="email"
                 placeholder="Email Address"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleChange}
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm"
               />
             </div>
@@ -71,8 +97,7 @@ const RegisterPage = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handleChange}
                 className="w-full pl-10 pr-10 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm"
               />
               <button
