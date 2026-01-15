@@ -4,7 +4,7 @@ A sleek, modern interface built with **Next.js** and **Tailwind CSS**.
 
 ## 📁 Project Directory Structure
 
-src/
+```src/
 ├── app/                  # Next.js App Router (Pages & Routing)
 │   ├── dashboard/        # Protected User Dashboard
 │   ├── login/            # Authentication: Login Page
@@ -25,6 +25,7 @@ src/
 │   └── task.ts           # Task and TaskList models
 └── utils/                # Helper Functions
     └── index.ts          # Global fetch wrapper (fetchWithAuth)
+```
 
 ## 🛠️ Tech Stack
 * **Framework**: Next.js 16 (App Router)
