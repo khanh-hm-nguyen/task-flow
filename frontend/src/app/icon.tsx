@@ -6,13 +6,33 @@ export const contentType = "image/png";
 export default function Icon() {
   return new ImageResponse(
     (
-      <div className="flex items-center gap-2 group cursor-pointer">
-        <div className="bg-yellow-400/10 p-2 rounded-lg group-hover:bg-yellow-400/20 transition-colors">
-          <span className="text-xl">⚡</span>
+      <div
+        style={{
+          display: 'flex', // MUST be explicit for Satori
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          background: 'transparent',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(250, 204, 21, 0.1)', 
+            borderRadius: '8px',
+            padding: '4px',
+            marginRight: '4px'
+          }}
+        >
+          <span style={{ fontSize: '16px' }}>⚡</span>
         </div>
-        <span className="font-bold text-xl tracking-tight text-white">
-          Task<span className="text-yellow-400">Flow</span>
-        </span>
+     
+        <div style={{ display: 'flex', fontWeight: 'bold', fontSize: '12px', color: 'white' }}>
+          T<span style={{ color: '#facc15' }}>F</span>
+        </div>
       </div>
     ),
     { ...size }
