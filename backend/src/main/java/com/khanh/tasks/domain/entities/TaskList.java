@@ -55,7 +55,7 @@ public class TaskList {
         this.tasks = tasks;
         this.created = created;
         this.updated = updated;
-        this.user = user; // Set the user here
+        this.user = user;
     }
 
     public User getUser() {

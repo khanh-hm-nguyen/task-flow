@@ -31,23 +31,22 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Return an empty list or specific roles if you have them
+
         return List.of();
     }
 
     @Override
     public String getPassword() {
-        // FIX: Return the actual encoded password from the DB
+
         return this.password;
     }
 
     @Override
     public String getUsername() {
-        // FIX: Return the email (which acts as the username in your config)
+
         return this.email;
     }
 
-    // Ensure these return true so the account is active
     @Override
     public boolean isAccountNonExpired() {
         return true;
