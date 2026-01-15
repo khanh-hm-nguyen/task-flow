@@ -12,4 +12,5 @@ export interface AuthRequest {
 
 export interface AuthResponse {
   token: string;
+  firstname: string;
 }

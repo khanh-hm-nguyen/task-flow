@@ -32,13 +32,12 @@ export const authService = {
     if (result.token) {
       localStorage.setItem("token", result.token);
     }
+
+    if (result.firstname) {
+      localStorage.setItem("firstname", result.firstname);
+    }
     return result;
   },
-
-//   async getSecureData(): Promise<string> {
-//     const response = await fetchWithAuth("/demo-controller");
-//     return response.text();
-//   },
 
   // logout
   logout() {
@@ -50,6 +49,7 @@ export const authService = {
     return !!localStorage.getItem("token");
   },
 
+  // return username
   getUserName(): string {
     return localStorage.getItem("firstname") || "Guest";
   }

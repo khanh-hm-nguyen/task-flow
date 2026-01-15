@@ -30,11 +30,13 @@ public class AuthenticationService {
                 .build();
         repository.save(user); // create user
 
+        System.out.println(user.getFirstname());
+
         // generate new token
         var jwtToken = jwtService.generateToken(user);
 
         // return token
-        return AuthResponse.builder().token(jwtToken).build();
+        return AuthResponse.builder().token(jwtToken).firstname(user.getFirstname()).build();
     }
 
 
@@ -52,6 +54,6 @@ public class AuthenticationService {
         // if correct, fetch user and return new token
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        return AuthResponse.builder().token(jwtToken).build();
+        return AuthResponse.builder().token(jwtToken).firstname(user.getFirstname()).build();
     }
 }

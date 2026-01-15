@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authService } from "@/services/auth.service";
 import { RegisterRequest } from "@/types/auth";
-import Link from "next/link";
 
+import Link from "next/link";
 
 import {
   EmailOutlined,
@@ -29,14 +29,14 @@ const RegisterPage = () => {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-   e.preventDefault();
+    e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
       // The service handles token storage automatically
       const res = await authService.register(formData);
-      console.log(res)
+      console.log(res);
       router.push("/dashbboard");
     } catch (err) {
       setError("Registration failed. Email might be in use.");
@@ -60,14 +60,28 @@ const RegisterPage = () => {
         {/* Form */}
         <div className="p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Full Name */}
+            {/* First Name */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                 <PersonOutline fontSize="small" />
               </div>
               <input
                 type="text"
-                placeholder="Full Name"
+                placeholder="First Name"
+                required
+                onChange={handleChange}
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm"
+              />
+            </div>
+
+            {/* Last Name */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                <PersonOutline fontSize="small" />
+              </div>
+              <input
+                type="text"
+                placeholder="Last Name"
                 required
                 onChange={handleChange}
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm"
