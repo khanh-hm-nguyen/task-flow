@@ -3,8 +3,8 @@
 TaskFlow is a high-performance, full-stack task management application. It features a secure **Spring Boot** backend with **JWT Authentication** and a modern **Next.js** frontend.
 
 ## 🏗️ Project Structure
-* **/backend**: Spring Boot 3 API (Java, Spring Security, Hibernate, PostgreSQL/H2).
-* **/frontend**: Next.js 15 Web Application (TypeScript, Tailwind CSS).
+* **/backend**: Spring Boot 4 API (Java, Spring Security, Hibernate, PostgreSQL/H2).
+* **/frontend**: Next.js 16 Web Application (TypeScript, Tailwind CSS).
 
 ## 🚀 Quick Start
 1.  **Clone the repo**: `git clone <your-repo-link>`
